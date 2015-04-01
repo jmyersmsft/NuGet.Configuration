@@ -357,7 +357,7 @@ namespace NuGet.Configuration.Test
     <add key=""key"" value=""value"" />
   </NewSectionName>
 </configuration>";
-            Assert.Equal(GetExpectedResult(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, configFile)));
+            Assert.Equal(RemovedLineEndings(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, configFile)));
         }
 
         [Fact]
@@ -386,7 +386,7 @@ namespace NuGet.Configuration.Test
     <add key=""keyTwo"" value=""valueTwo"" />
   </SectionName>
 </configuration>";
-            Assert.Equal(GetExpectedResult(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, configFile)));
+            Assert.Equal(RemovedLineEndings(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, configFile)));
         }
 
         [Fact]
@@ -414,7 +414,7 @@ namespace NuGet.Configuration.Test
     <add key=""key"" value=""NewValue"" />
   </SectionName>
 </configuration>";
-            Assert.Equal(GetExpectedResult(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, configFile)));
+            Assert.Equal(RemovedLineEndings(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, configFile)));
         }
 
         [Fact]
@@ -493,7 +493,7 @@ namespace NuGet.Configuration.Test
     <add key=""key"" value=""value"" />
   </NewSectionName>
 </configuration>";
-            Assert.Equal(GetExpectedResult(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
+            Assert.Equal(RemovedLineEndings(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
         }
 
         [Fact]
@@ -523,7 +523,7 @@ namespace NuGet.Configuration.Test
     <add key=""keyTwo"" value=""valueTwo"" />
   </SectionName>
 </configuration>";
-            Assert.Equal(GetExpectedResult(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
+            Assert.Equal(RemovedLineEndings(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
         }
 
         [Fact]
@@ -553,7 +553,7 @@ namespace NuGet.Configuration.Test
     <add key=""key"" value=""NewValue"" />
   </SectionName>
 </configuration>";
-            Assert.Equal(GetExpectedResult(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
+            Assert.Equal(RemovedLineEndings(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
         }
 
         [Fact]
@@ -586,7 +586,7 @@ namespace NuGet.Configuration.Test
     <add key=""key2"" value=""Value2"" />
   </SectionName>
 </configuration>";
-            Assert.Equal(GetExpectedResult(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
+            Assert.Equal(RemovedLineEndings(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
         }
 
         [Fact]
@@ -616,7 +616,7 @@ namespace NuGet.Configuration.Test
     </MyKey>
   </SectionName>
 </configuration>";
-            Assert.Equal(GetExpectedResult(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
+            Assert.Equal(RemovedLineEndings(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
         }
 
         [Fact]
@@ -656,7 +656,7 @@ namespace NuGet.Configuration.Test
     </MyKey2>
   </SectionName>
 </configuration>";
-            Assert.Equal(GetExpectedResult(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
+            Assert.Equal(RemovedLineEndings(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
         }
 
         [Fact]
@@ -694,7 +694,7 @@ namespace NuGet.Configuration.Test
     </MyKey>
   </SectionName>
 </configuration>";
-            Assert.Equal(GetExpectedResult(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
+            Assert.Equal(RemovedLineEndings(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
         }
 
         [Fact]
@@ -795,7 +795,7 @@ namespace NuGet.Configuration.Test
     <add key=""key"" value=""value"" />
   </SectionName2>
 </configuration>";
-            Assert.Equal(GetExpectedResult(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
+            Assert.Equal(RemovedLineEndings(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
         }
 
         [Fact]
@@ -859,7 +859,7 @@ namespace NuGet.Configuration.Test
     <add key=""key"" value=""value"" />
   </SectionName2>
 </configuration>";
-            Assert.Equal(GetExpectedResult(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
+            Assert.Equal(RemovedLineEndings(result), ReadConfigurationFile(Path.Combine(mockBaseDirectory, nugetConfigPath)));
         }
 
         [Fact]
@@ -1390,12 +1390,12 @@ namespace NuGet.Configuration.Test
             {
                 using (var streamReader = new StreamReader(fs))
                 {
-                    return streamReader.ReadToEnd().Replace("\n","").Replace("\r","");
+                    return RemovedLineEndings(streamReader.ReadToEnd());
                 }
             }
         }
-
-        private string GetExpectedResult(string result)
+        // this method is for removing LineEndings for CI build
+        private string RemovedLineEndings(string result)
         {
             return result.Replace("\n", "").Replace("\r", "");
         }
